@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Commons\dF.Commons.Services.BL.Contracts\dF.Commons.Services.BL.Contracts.csproj" />
+    <ProjectReference Include="..\..\Commons\dF.Commons.Services.BL\dF.Commons.Services.BL.csproj" />
+    <ProjectReference Include="..\Puzzle.BL.Contracts\Puzzle.BL.Contracts.csproj" />
+    <ProjectReference Include="..\Puzzle.Data.Contracts\Puzzle.Data.Contracts.csproj" />
+    <ProjectReference Include="..\Puzzle.Domain\Puzzle.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
