@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Commons\dF.Commons.Services.Data.InMemory\dF.Commons.Services.Data.InMemory.csproj" />
+    <ProjectReference Include="..\Puzzle.Data.Contracts\Puzzle.Data.Contracts.csproj" />
+    <ProjectReference Include="..\Puzzle.Models.InMemory\Puzzle.Models.InMemory.csproj" />
+  </ItemGroup>
+
+</Project>

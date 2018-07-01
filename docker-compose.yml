@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  puzzle.api:
+    image: ${DOCKER_REGISTRY}puzzleapi
+    build:
+      context: .
+      dockerfile: Sources\Service\Puzzle.API\Dockerfile

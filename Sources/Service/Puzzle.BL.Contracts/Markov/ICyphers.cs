@@ -1,4 +1,7 @@
-﻿using dF.Commons.Services.BL.Contracts;
+﻿using System.Threading.Tasks;
+
+using dF.Commons.Models.BL;
+using dF.Commons.Services.BL.Contracts;
 
 using Puzzle.Domain;
 
@@ -12,6 +15,7 @@ namespace Puzzle.BL.Contracts.Markov
 
     public interface ICyphers : IBusinessAggregate<Cypher>
     {
+        Task<ResponseContext<string>> Solve(int cypherId);
         ICyphersChildren WithId(int cypherId);
     }
 

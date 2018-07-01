@@ -1,6 +1,12 @@
-﻿using dF.Commons.Services.BL.Contracts;
+﻿using dF.Commons.Models.BL;
+using dF.Commons.Models.Global.Constants;
+using dF.Commons.Services.BL.Contracts;
 
 using Puzzle.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Puzzle.BL.Contracts.Markov
 {
@@ -12,6 +18,7 @@ namespace Puzzle.BL.Contracts.Markov
 
     public interface ICypherSchemes : IBusinessAggregate<CypherScheme>
     {
+        Task<ResponseContext<IList<CypherScheme>>> GetAllReplacementRules<TKey>(Expression<Func<CypherScheme, TKey>> orderBy, int page = 1, int? pageSize = Paging.pageSize, bool descendingOrder = false, params Expression<Func<CypherScheme, bool>>[] where);
         ICypherSchemesChildren WithId(int? cypherId, int? replacementRuleId);
     }
 

@@ -4,6 +4,10 @@ namespace Puzzle.Domain
 {
     public partial class ReplacementRule
     {
+        public ReplacementRule()
+        {
+        }
+
         public virtual int Id { get; set; }
         public virtual string Source { get; set; }
         public virtual string Replacement { get; set; }

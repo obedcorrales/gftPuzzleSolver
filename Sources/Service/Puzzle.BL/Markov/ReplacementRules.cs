@@ -16,7 +16,7 @@ using Puzzle.BL.Contracts.Markov;
 using Puzzle.Data.Contracts;
 using Puzzle.Domain;
 
-namespace Puzzle.BL
+namespace Puzzle.BL.Markov
 {
     public class ReplacementRules : BusinessAggregate<ReplacementRule>, IReplacementRules
     {
@@ -28,11 +28,12 @@ namespace Puzzle.BL
         public new static List<ResourceLink> ResourceMap => _resourceMap.Value;
 
         // Security
-        static Func<ClaimsPrincipal, Actions, Result> _canAccessUsers = (principal, action) => principal.CheckResourceAccess(action, new string[] { ResourceName });
+        static Func<ClaimsPrincipal, Actions, Result> _canAccessReplacementRules = (principal, action) => Result.Ok();
+        //static Func<ClaimsPrincipal, Actions, Result> _canAccessReplacementRules = (principal, action) => principal.CheckResourceAccess(action, new string[] { ResourceName });
         #endregion
 
         public ReplacementRules(IUow uow, IPuzzleContext context, bool commitInmediately = true, params Expression<Func<ReplacementRule, bool>>[] parentKeys) :
-            base(new BusinessAggregateParams<ReplacementRule>(uow, uow.ReplacementRules, context, _canAccessUsers, ResourceMap, ResourceName, PluralResourceName, parentKeys),
+            base(new BusinessAggregateParams<ReplacementRule>(uow, uow.ReplacementRules, context, _canAccessReplacementRules, ResourceMap, ResourceName, PluralResourceName, parentKeys),
                 commitInmediately)
         { }
 

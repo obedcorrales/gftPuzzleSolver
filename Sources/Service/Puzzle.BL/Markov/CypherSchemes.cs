@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
-
+using System.Threading.Tasks;
 using dF.Commons.Models.BL;
+using dF.Commons.Models.BL.Extensions;
 using dF.Commons.Models.Globals;
 using dF.Commons.Models.Globals.Extensions;
 using dF.Commons.Security.Constants;
-using dF.Commons.Security.Helpers;
+//using dF.Commons.Security.Helpers;
 using dF.Commons.Services.BL;
 using dF.Commons.Services.BL.Helpers;
 
@@ -16,7 +18,7 @@ using Puzzle.BL.Contracts.Markov;
 using Puzzle.Data.Contracts;
 using Puzzle.Domain;
 
-namespace Puzzle.BL
+namespace Puzzle.BL.Markov
 {
     public class CypherSchemes : BusinessAggregate<CypherScheme>, ICypherSchemes
     {
@@ -28,11 +30,12 @@ namespace Puzzle.BL
         public new static List<ResourceLink> ResourceMap => _resourceMap.Value;
 
         // Security
-        static Func<ClaimsPrincipal, Actions, Result> _canAccessUsers = (principal, action) => principal.CheckResourceAccess(action, new string[] { ResourceName });
+        static Func<ClaimsPrincipal, Actions, Result> _canAccessCypherSchemes = (principal, action) => Result.Ok();
+        //static Func<ClaimsPrincipal, Actions, Result> _canAccessCypherSchemes = (principal, action) => principal.CheckResourceAccess(action, new string[] { ResourceName });
         #endregion
 
         public CypherSchemes(IUow uow, IPuzzleContext context, bool commitInmediately = true, params Expression<Func<CypherScheme, bool>>[] parentKeys) :
-            base(new BusinessAggregateParams<CypherScheme>(uow, uow.CypherSchemes, context, _canAccessUsers, ResourceMap, ResourceName, PluralResourceName, parentKeys),
+            base(new BusinessAggregateParams<CypherScheme>(uow, uow.CypherSchemes, context, _canAccessCypherSchemes, ResourceMap, ResourceName, PluralResourceName, parentKeys),
                 commitInmediately)
         { }
 
@@ -51,6 +54,35 @@ namespace Puzzle.BL
                     else
                         return new CypherSchemesChildren((Result)r);
                 });
+        }
+
+        private async Task<Result<IList<CypherScheme>>> _getAllReplacementRules<TKey>(Expression<Func<CypherScheme, TKey>> orderBy, int page = 1, int? pageSize = 50, bool descendingOrder = false, params Expression<Func<CypherScheme, bool>>[] where)
+        {
+            var schemes = await GetAllCoreAsync(orderBy, page, pageSize, descendingOrder, where);
+
+            IList<int> ruleIds = new List<int>();
+            foreach (var scheme in schemes.Value)
+                ruleIds.Add(scheme.ReplacementRuleId);
+
+            var rules = await ((IUow)AggregateParams.UOW).ReplacementRules.GetQueryable().Where(r => ruleIds.Contains(r.Id)).GetAllAsync();
+
+            foreach (var scheme in schemes.Value)
+            {
+                var rule = rules.Value.First(r => r.Id == scheme.ReplacementRuleId);
+                if (rule != null)
+                    scheme.ReplacementRule = rule;
+            }
+
+            return schemes;
+        }
+
+        public async Task<ResponseContext<IList<CypherScheme>>> GetAllReplacementRules<TKey>(Expression<Func<CypherScheme, TKey>> orderBy, int page = 1, int? pageSize = 50, bool descendingOrder = false, params Expression<Func<CypherScheme, bool>>[] where)
+        {
+            var schemes = await _getAllReplacementRules(orderBy, page, pageSize, descendingOrder, where);
+
+            return schemes.ToResponseContext()
+                    .Then(response => response.withRecordCount(response.Result.Count))
+                    .ThenIf(AggregateParams.Context.IsHATEOASRequest, response => GetAllHATEOAS(response, page, pageSize.Value));
         }
         #endregion
     }

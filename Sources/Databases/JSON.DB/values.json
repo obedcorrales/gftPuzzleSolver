@@ -512,7 +512,7 @@
       "isTermination": false
     },
     {
-      "order": 8,
+      "order": 12,
       "rule": 3,
       "isTermination": false
     }
@@ -534,7 +534,7 @@
       "isTermination": false
     },
     {
-      "order": 12,
+      "order": 8,
       "rule": 34,
       "isTermination": false
     },
