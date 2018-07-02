@@ -25,6 +25,19 @@ FAQ
 ├────── **Databases** ==> *.json and .xml files containing the data to be used for this project* </br>
 ├────── **Service** ==> *Code relevant to this solution* </br>
 
+### What if one wanted to change where the data is coming from?
+- As customary in Onion Architectures, the solution provides a set of Data Contracts (Interfaces) in order to access the data from the Business Logic
+- If we wanted to handle data from a different source, we need only implement the Data Contracts and access the new data sources from there
+- The current solution is plugged to the JSON files in the **Databases** folder, but just as easily it could plug to the XML files instead
+
+### What's the deal with the InMemory database found in the **Infrastructure** folder?
+- It's just **an** implementation of the common's data contracts which happens to work with objects in Memory
+- This InMemory database was created to aid in testing
+
+### Could we have several Data Sources at once?
+- Absolutely. The data contracts have been implemented by the InMemory database and EF 6; but any technology can be used, as long as the contracts are implemented
+- As a matter of fact, one could even choose live, per request or user, the data source one would use
+
 ### Why mark Domain Entity Fields as **virtual**?
 - This allows for Interceptors to be used on the entities
 - e.g.: Dirty Field Trackers
