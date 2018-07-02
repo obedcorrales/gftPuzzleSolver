@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using dF.Commons.Models.BL;
 using dF.Commons.Models.Global.Enums;
 using dF.Commons.Models.Globals;
+
 using Puzzle.BL.Contracts.Context;
 using Puzzle.BL.Contracts.Markov;
 using Puzzle.BL.Contracts.Puzzle;
@@ -33,6 +34,7 @@ namespace Puzzle.BL.Puzzle
             _context = context;
         }
 
+        // TODO: Make Functional
         public async Task<ResponseContext<IList<PuzzleMatrix>>> GetMatrix()
         {
             var cypherData = await Cyphers.GetAllAsync(c => c.Id, 0, null);
@@ -64,6 +66,7 @@ namespace Puzzle.BL.Puzzle
             return ResponseContext.Ok(matrix);
         }
 
+        // TODO: Make Functional
         public async Task<ResponseContext<IList<PuzzleSolution>>> SolvePuzzle()
         {
             var matrix = await GetMatrix();
@@ -83,6 +86,7 @@ namespace Puzzle.BL.Puzzle
             return ResponseContext.Ok(solutions);
         }
 
+        #region Puzzle Solver
         Result<PuzzleSolution> FindWord(PuzzleWord word, IList<PuzzleMatrix> matrix)
         {
             var characters = word.Word.ToCharArray();
@@ -157,5 +161,6 @@ namespace Puzzle.BL.Puzzle
 
             return surroundings;
         }
+        #endregion
     }
 }

@@ -1,5 +1,16 @@
+Steps to Follow
+====
+- Fire up the Back End Solution.
+- Visit http://localhost:9000/PZL/swagger in order to have access to the API through a Swagger UI
+
 FAQ
 ====
+
+### What are the main **Architectural Patterns** followed?
+- The Back End is composed of a Service which encapsulates the Data Access as well as the Business Logic
+- Such service is actually a Microservice
+- The Microservice is implemented using a **Onion Architecture**
+![Onion Architecture](OnionArchitecture.png)
 
 ### Why mark Domain Entity Fields as **virtual**?
 - This allows for Interceptors to be used on the entities
