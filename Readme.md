@@ -1,6 +1,13 @@
 Steps to Follow
 ====
 - Fire up the Back End Solution.
+  - Go to the **Puzzle.API** project
+    - Find it at **02 Service/03 Shell/02 API** folder inside the solution
+    - Open up the **Properties** of the project
+    - In the **Debug** tab, under **Start Options** add the following to the **Command Line Arguments**:
+      - "**--console**"
+      - This is in order to run the service on the **console**, for testing purposes
+      - The service is built to run in the **console**, as a **Windows Service**, or with a couple more files as an **Azure Worker** too
 - Visit http://localhost:9000/PZL/swagger in order to have access to the API through a Swagger UI
 
 FAQ
