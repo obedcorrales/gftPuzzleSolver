@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using dF.Commons.Models.BL;
+using dF.Commons.Models.BL.Extensions;
 using dF.Commons.Models.Globals;
 using dF.Commons.Models.Globals.Extensions;
 using dF.Commons.Security.Constants;
@@ -40,45 +42,99 @@ namespace Puzzle.BL.Markov
         public Cyphers(Result result) : base(result, ResourceName) { }
 
         #region Markov Solver
-        public async Task<ResponseContext<string>> Solve(int cypherId)
+        public async Task<ResponseContext<string>> SolveMarkov(int cypherId)
         {
-            var cypherData = await GetByIdAsync(c => c.Id == cypherId);
-            var schemeData = await WithId(cypherId).Schemes.GetAllReplacementRules(s => s.OrderId, 0, null);
-            //var schemeDict = new Dictionary<string, string>();
+            string cypher = "";
 
-            //foreach (var scheme in schemeData.Result)
-            //    schemeDict.Add(scheme.ReplacementRule.Source, scheme.ReplacementRule.Replacement);
-
-            var cypher = cypherData.Result.CypherText;
-            var schemeLength = schemeData.RecordCount;
-            var solved = false;
-
-            do
+            return await GetByIdAsync(c => c.Id == cypherId).MapAsync(cypherData =>
             {
-                var i = 0;
-                var original = cypher;
-
-                foreach (var scheme in schemeData.Result)
+                return ((WithId(cypherId).Schemes.GetAllReplacementRules(s => s.OrderId, 0, null).MapAsync(schemeData =>
                 {
-                    i++;
-                    cypher = cypher.Replace(scheme.ReplacementRule.Source, scheme.ReplacementRule.Replacement);
+                    cypher = cypherData.CypherText;
+                    var schemeLength = schemeData.Count;
+                    var solved = false;
 
-                    if (cypher != original)
+                    do
                     {
-                        if (scheme.IsTermination)
-                            solved = true;
+                        var i = 0;
+                        var original = cypher;
 
-                        break;
-                    }
-                    else if (i == schemeLength)
-                    {
-                        solved = true;
-                        break;
-                    }
-                }
-            } while (!solved);
+                        foreach (var scheme in schemeData)
+                        {
+                            i++;
+                            cypher = cypher.Replace(scheme.ReplacementRule.Source, scheme.ReplacementRule.Replacement);
 
-            return ResponseContext.Ok(cypher);
+                            if (cypher != original)
+                            {
+                                if (scheme.IsTermination)
+                                    solved = true;
+
+                                break;
+                            }
+                            else if (i == schemeLength)
+                            {
+                                solved = true;
+                                break;
+                            }
+                        }
+                    } while (!solved);
+
+                    return cypher;
+                })));
+            })
+            .ReturnAsync(() => ResponseContext.Ok(cypher));
+
+            /// ****************************************************************************
+            /// 
+            /// The Non-Functional way has the characteristic that should
+            ///     any part of the process error out, the message would
+            ///     NOT boil up all the way to the UI.
+            ///     
+            /// The Functional way, on the other hand, allows for the processes
+            ///     to continue their normal course down their happy paths,
+            ///     but catches all failures on any of the unhappy paths
+            ///     and bubbles them up to the UI effortlessly.
+            /// 
+            /// As an exercise, comment the code above and uncomment the code bellow,
+            ///     then try to make a request for Cypher #15 (which does not exist).
+            ///     Check the outputs.
+            /// 
+            /// ****************************************************************************
+            #region Non-Functional Way
+            //var cypherData = await GetByIdAsync(c => c.Id == cypherId);
+            //var schemeData = await WithId(cypherId).Schemes.GetAllReplacementRules(s => s.OrderId, 0, null);
+
+            //var cypher = cypherData.Result.CypherText;
+            //var schemeLength = schemeData.RecordCount;
+            //var solved = false;
+
+            //do
+            //{
+            //    var i = 0;
+            //    var original = cypher;
+
+            //    foreach (var scheme in schemeData.Result)
+            //    {
+            //        i++;
+            //        cypher = cypher.Replace(scheme.ReplacementRule.Source, scheme.ReplacementRule.Replacement);
+
+            //        if (cypher != original)
+            //        {
+            //            if (scheme.IsTermination)
+            //                solved = true;
+
+            //            break;
+            //        }
+            //        else if (i == schemeLength)
+            //        {
+            //            solved = true;
+            //            break;
+            //        }
+            //    }
+            //} while (!solved);
+
+            //return ResponseContext.Ok(cypher);
+            #endregion
         }
         #endregion
 

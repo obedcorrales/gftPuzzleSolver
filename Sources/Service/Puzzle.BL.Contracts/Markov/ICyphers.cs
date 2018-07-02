@@ -15,7 +15,7 @@ namespace Puzzle.BL.Contracts.Markov
 
     public interface ICyphers : IBusinessAggregate<Cypher>
     {
-        Task<ResponseContext<string>> Solve(int cypherId);
+        Task<ResponseContext<string>> SolveMarkov(int cypherId);
         ICyphersChildren WithId(int cypherId);
     }
 

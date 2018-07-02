@@ -90,12 +90,12 @@ namespace Puzzle.API.Controllers
         }
         #endregion
 
-        #region Cypher Scheme CRUD
+        #region Solve Markov Cypher
         [HttpGet]
         [Route("{cypherId:int}/solve")]
         public async Task<IHttpActionResult> SolveMarkov(int cypherId)
         {
-            return Ok(await Puzzle.Cyphers.Solve(cypherId));
+            return Ok(await Puzzle.Cyphers.SolveMarkov(cypherId));
         }
         #endregion
     }
