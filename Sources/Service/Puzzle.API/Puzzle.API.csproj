@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\PuzzlesController.cs" />
+    <Compile Include="Controllers\PuzzleWordsController.cs" />
     <Compile Include="Controllers\ReplacementRulesController.cs" />
     <Compile Include="Controllers\CyphersController.cs" />
     <Compile Include="Program.cs" />

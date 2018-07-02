@@ -123,6 +123,9 @@
   <data name="RelativePathToCypherScheme" xml:space="preserve">
     <value>..\..\..\..\Databases\JSON.DB\values.json</value>
   </data>
+  <data name="RelativePathToPuzzleWords" xml:space="preserve">
+    <value>..\..\..\..\Databases\JSON.DB\words.json</value>
+  </data>
   <data name="RelativePathToReplacementRules" xml:space="preserve">
     <value>..\..\..\..\Databases\JSON.DB\base.json</value>
   </data>

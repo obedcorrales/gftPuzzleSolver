@@ -1,4 +1,5 @@
 ﻿using Puzzle.BL.Contracts.Markov;
+using Puzzle.BL.Contracts.Puzzle;
 
 namespace Puzzle.BL.Contracts
 {
@@ -6,5 +7,7 @@ namespace Puzzle.BL.Contracts
     {
         IReplacementRules ReplacementRules { get; }
         ICyphers Cyphers { get; }
+        IPuzzleWords PuzzleWords { get; }
+        IPuzzles Puzzles { get; }
     }
 }

@@ -144,7 +144,7 @@ namespace dF.Commons.Services.BL
             }
         }
 
-        public async Task<ResponseContext<IList<T>>> GetAllAsync<TKey>(Expression<Func<T, TKey>> orderBy, int page = 1, int pageSize = Paging.pageSize, bool descendingOrder = false, params Expression<Func<T, bool>>[] where)
+        public async Task<ResponseContext<IList<T>>> GetAllAsync<TKey>(Expression<Func<T, TKey>> orderBy, int page = 1, int? pageSize = Paging.pageSize, bool descendingOrder = false, params Expression<Func<T, bool>>[] where)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace dF.Commons.Services.BL
             }
         }
 
-        public async Task<ResponseContext<IList<K>>> GetAllAsync<K, TKey>(Expression<Func<T, TKey>> orderBy, int page = 1, int pageSize = Paging.pageSize, bool descendingOrder = false, params Expression<Func<T, bool>>[] where) where K : class, T
+        public async Task<ResponseContext<IList<K>>> GetAllAsync<K, TKey>(Expression<Func<T, TKey>> orderBy, int page = 1, int? pageSize = Paging.pageSize, bool descendingOrder = false, params Expression<Func<T, bool>>[] where) where K : class, T
         {
             try
             {
@@ -180,7 +180,7 @@ namespace dF.Commons.Services.BL
             return _afterGetAll != null ? _afterGetAll(results) : results;
         }
 
-        protected virtual ResponseContext<IList<K>> GetAllHATEOAS<K>(ResponseContext<IList<K>> response, int page, int pageSize) where K : T
+        protected virtual ResponseContext<IList<K>> GetAllHATEOAS<K>(ResponseContext<IList<K>> response, int page, int? pageSize) where K : T
         {
             //return _getAllHATEOAS != null ? _getAllHATEOAS(response) : response;
             return response;

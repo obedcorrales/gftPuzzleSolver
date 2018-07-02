@@ -74,7 +74,7 @@ namespace dF.Commons.Services.BL
 
         #region CRUD
         #region Get All
-        protected override ResponseContext<IList<K>> GetAllHATEOAS<K>(ResponseContext<IList<K>> response, int page, int pageSize)
+        protected override ResponseContext<IList<K>> GetAllHATEOAS<K>(ResponseContext<IList<K>> response, int page, int? pageSize)
         {
             //if (_getAllHATEOAS != null)
             //    return _getAllHATEOAS(response);

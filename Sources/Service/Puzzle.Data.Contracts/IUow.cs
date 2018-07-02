@@ -9,5 +9,7 @@ namespace Puzzle.Data.Contracts
         IRepository<Cypher> Cyphers { get; }
         IRepository<CypherScheme> CypherSchemes { get; }
         IRepository<ReplacementRule> ReplacementRules { get; }
+
+        IRepository<PuzzleWord> PuzzleWords { get; }
     }
 }

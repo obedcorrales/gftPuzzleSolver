@@ -79,6 +79,15 @@ namespace Puzzle.Models.InMemory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ..\..\..\..\Databases\JSON.DB\words.json.
+        /// </summary>
+        internal static string RelativePathToPuzzleWords {
+            get {
+                return ResourceManager.GetString("RelativePathToPuzzleWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ..\..\..\..\Databases\JSON.DB\base.json.
         /// </summary>
         internal static string RelativePathToReplacementRules {

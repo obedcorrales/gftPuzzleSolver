@@ -9,6 +9,7 @@ namespace Puzzle.Models.InMemory
         static DbSet<Cypher> _cyphers = null;
         static DbSet<CypherScheme> _cypherSchemes = null;
         static DbSet<ReplacementRule> _replacementRules = null;
+        static DbSet<PuzzleWord> _puzzleWords = null;
 
         public Puzzle_Context()
         {
@@ -27,6 +28,10 @@ namespace Puzzle.Models.InMemory
                     .withKey(k => k.Id)
                     .andSeed(DataInitializer.ReplacementRules_SeedData()));
 
+                base.Add(_puzzleWords = DbSet<PuzzleWord>
+                    .withKey(k => k.Id)
+                    .andSeed(DataInitializer.PuzzleWords_SeedData()));
+
                 initialized = true;
             }
             else
@@ -34,11 +39,13 @@ namespace Puzzle.Models.InMemory
                 base.Add(_cyphers);
                 base.Add(_cypherSchemes);
                 base.Add(_replacementRules);
+                base.Add(_puzzleWords);
             }
         }
 
         public virtual DbSet<Cypher> Cyphers => _cyphers;
         public virtual DbSet<CypherScheme> CypherSchemes => _cypherSchemes;
         public virtual DbSet<ReplacementRule> ReplacementRules => _replacementRules;
+        public virtual DbSet<PuzzleWord> PuzzleWords => _puzzleWords;
     }
 }

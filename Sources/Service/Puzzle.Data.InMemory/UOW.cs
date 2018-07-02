@@ -14,9 +14,11 @@ namespace Puzzle.Data.InMemory
         IRepository<Cypher> _cyphers = null;
         IRepository<CypherScheme> _cypherSchemes = null;
         IRepository<ReplacementRule> _replacementRules = null;
+        IRepository<PuzzleWord> _puzzleWords = null;
 
         public IRepository<Cypher> Cyphers => _cyphers ?? (_cyphers = new Repository<Cypher>(dbContext));
         public IRepository<CypherScheme> CypherSchemes => _cypherSchemes ?? (_cypherSchemes = new Repository<CypherScheme>(dbContext));
         public IRepository<ReplacementRule> ReplacementRules => _replacementRules ?? (_replacementRules = new Repository<ReplacementRule>(dbContext));
+        public IRepository<PuzzleWord> PuzzleWords => _puzzleWords ?? (_puzzleWords = new Repository<PuzzleWord>(dbContext));
     }
 }

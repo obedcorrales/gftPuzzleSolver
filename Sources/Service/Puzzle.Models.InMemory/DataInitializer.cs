@@ -76,5 +76,23 @@ namespace Puzzle.Models.InMemory
 
             return ReplacementRules;
         }
+
+        public static IList<PuzzleWord> PuzzleWords_SeedData()
+        {
+            var pathToPuzzleWords = Path.Combine(Directory.GetCurrentDirectory(), DBSources.RelativePathToPuzzleWords);
+
+            StreamReader stream = new StreamReader(pathToPuzzleWords);
+            string data = stream.ReadToEnd();
+
+            IList<string> wordsStrings = JsonConvert.DeserializeObject<List<string>>(data);
+
+            IList<PuzzleWord> PuzzleWords = new List<PuzzleWord>();
+            int id = 0;
+
+            foreach (var word in wordsStrings)
+                PuzzleWords.Add(new PuzzleWord { Id = id++, Word = word });
+
+            return PuzzleWords;
+        }
     }
 }
