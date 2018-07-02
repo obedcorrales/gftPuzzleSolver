@@ -14,6 +14,17 @@ FAQ
 - More information on Onion Architectures can be found at:
   - http://jeffreypalermo.com/blog/the-onion-architecture-part-1/
 
+### What's the overall Project Layout?
+. </br>
+├── **Front End** ==> *Placeholder for Front End Project(s)* </br>
+├── **Puzzle Services** ==> *Back End Service* </br>
+├── **AssemblyInfo** ==> *Used to unify the whole service Versioning (not hooked up yet)* </br>
+├── **Docs** ==> *Where relevant documentation about the service is placed* </br>
+├── **Sources** ==> *Source Files* </br>
+├────── **Commons** ==> *Commons Library is present here in order to avoid Private Nugets* </br>
+├────── **Databases** ==> *.json and .xml files containing the data to be used for this project* </br>
+├────── **Service** ==> *Code relevant to this solution* </br>
+
 ### Why mark Domain Entity Fields as **virtual**?
 - This allows for Interceptors to be used on the entities
 - e.g.: Dirty Field Trackers
