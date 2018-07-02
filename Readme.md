@@ -9,8 +9,10 @@ FAQ
 ### What are the main **Architectural Patterns** followed?
 - The Back End is composed of a Service which encapsulates the Data Access as well as the Business Logic
 - Such service is actually a Microservice
-- The Microservice is implemented using a **Onion Architecture**
+- The Microservice is implemented using an **Onion Architecture**
 ![Onion Architecture](OnionArchitecture.png)
+- More information on Onion Architectures can be found at:
+  - http://jeffreypalermo.com/blog/the-onion-architecture-part-1/
 
 ### Why mark Domain Entity Fields as **virtual**?
 - This allows for Interceptors to be used on the entities
